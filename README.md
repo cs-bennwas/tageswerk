@@ -18,3 +18,13 @@ echo '8:40 - 11:20 Irgendein Text
 11:20 - 12:00 Silberfische jagen
 12:00 - 13:00 Silberfische Mittagessen mjam' | tageswerk
 ```
+Ausgabe:
+```
+----------------------
+
+02:40 Irgendein Text
+00:40 Silberfische jagen
+01:00 Silberfische Mittagessen mjam
+----------------------
+04:20 TOTAL
+```
