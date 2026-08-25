@@ -7,6 +7,7 @@ installieren mit
 ```
 git clone https://github.com/cs-bennwas/tageswerk.git
 cd tageswerk
+sudo chmod +x tageswerk
 cp ./tageswerk ~/.local/bin/tageswerk
 source ~/.bashrc
 ```
