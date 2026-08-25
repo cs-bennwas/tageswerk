@@ -1,7 +1,7 @@
 # tageswerk
 
 Schreibe deine Zeiten in diesem Format:
-8:40 - 11:20 Irgendein Text
+`8:40 - 11:20 Irgendein Text`
 
 installieren mit
 ```
