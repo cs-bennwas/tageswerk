@@ -1,0 +1,65 @@
+minutes_from_hours() {
+    IFS=: read -r h m <<< "$1"
+    echo $((10#$h * 60 + 10#$m))
+}
+
+echo_from_minutes() {
+    local stunden=$(($1 / 60))
+    local rest=$(($1 % 60))
+
+    printf '%02d:%02d\n' "$stunden" "$rest"
+}
+
+echo
+echo "----------------------"
+echo
+
+daytotal=0
+incomplete=""
+
+while IFS= read -r line; do
+    [[ -z "$line" ]] && continue
+
+    c=0
+    text=""
+    from=""
+    to=""
+    
+    for split in $line; do
+        if (( c > 2 )); then
+            text="$text $split"
+        fi
+
+        if [[ "$split" =~ ^[0-9]{1,2}:[0-9]{2}$ ]]; then
+            if (( c == 0 )); then
+                from=$(minutes_from_hours "$split")
+            elif (( c == 2 )); then
+                to=$(minutes_from_hours "$split")
+            fi
+        fi
+
+        ((c++))
+    done
+
+    # Zeile ist unvollständig
+    if [[ -z "$from" || -z "$to" ]]; then
+        incomplete+="$line"$'\n'
+        continue
+    fi
+
+    delta=$((to - from))
+    daytotal=$((daytotal + delta))
+
+    echo "$(echo_from_minutes "$delta")$text"
+
+done
+echo "----------------------"
+echo "$(echo_from_minutes "$daytotal") TOTAL"
+
+if [[ -n "$incomplete" ]]; then
+    echo
+    echo "----------------------"
+    echo
+    echo "Unvollständige Zeilen:"
+    printf '%s' "$incomplete"
+fi
